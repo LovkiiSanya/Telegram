@@ -1,7 +1,7 @@
 from Message import * 
 from AudioMessage import *
 from VideoMessage import *
-
+from support import *
 
 def main():
     pass
@@ -9,3 +9,5 @@ def main():
 while True:
     if __name__ == "__main__":
         main()
+
+    CRUDoperations()
