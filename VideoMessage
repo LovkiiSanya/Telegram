@@ -14,9 +14,9 @@ class VideoQuality(enum.Enum):
 class VideoMessage(Message):
     def __init__(self) -> None:
         super().__init__()
-        self.__duration: int = None
-        self.__format: str = None
-        self.__quality: str = None
+        self.__duration: int = None # длительность видео
+        self.__format: str = None # формат видео
+        self.__quality: str = None # качество видео 
 
     def set_duration(self,seconds:int)->int:
         self.__duration = seconds
@@ -50,7 +50,7 @@ class VideoMessage(Message):
     def get_quality(self):
         return self.__quality
     
-    def set_message_parameters() -> None:
+    def set_message_parameters() -> "VideoMessage":
         message = VideoMessage()
         content = input("Тут вы можете ввести свое сообщение,но не хулиганьте!")
         message.set_content(content)
@@ -95,6 +95,8 @@ class VideoMessage(Message):
             print("Что-то пошло не так,установлен стандартное качество")
             quality = 360
             message.set_quality(quality)
+        message_dict[message.get_id()] = message
+        print("Айди для архива сообщений,", message.get_id())
         return message
 
     def __repr__(self):
@@ -102,5 +104,4 @@ class VideoMessage(Message):
         return f"{VideoMessage}({self.get_id()!r},{self.get_content()!r},{self.get_recipient()!r},{self.get_time()!r},{self.get_duration()!r},{self.get_format()!r},{self.get_quality()!r})"
 
     def __str__(self):
-        return f"ID вашего сообщения:{self.get_id()} Ваше сообщение: {self.get_content()} Получатель: {self.get_recipient()},
-          Время отправки {self.get_time()} Длительность : {self.get_duration()} Формат аудио: {self.get_format()} Качество видео: {self.get_quality()}"
+        return f"ID вашего сообщения:{self.get_id()} Ваше сообщение: {self.get_content()} Получатель: {self.get_recipient()} Время отправки {self.get_time()} Длительность : {self.get_duration()} Формат аудио: {self.get_format()} Качество видео: {self.get_quality()}"
