@@ -1,9 +1,10 @@
 from Message import *
 
+
 class AudioFormat(enum.Enum):
-    MP3 = 1
-    AMV = 2
-    AUF = 3
+    MP3 = "Стандартный формат МР3"
+    AMV = "Улучшенный формат AMV"
+    AUF = "Пацанский формат AUF"
 
 class AudioMessage(Message):
     def __init__(self) -> None:
@@ -17,13 +18,13 @@ class AudioMessage(Message):
     def get_duration(self):
         return self.__duration
     
-    def set_format(self,audio: int)-> None:
-        if audio == 1:
-            format = "Формат звука: {}".format(AudioFormat.MP3)
-        elif audio == 2:
-            format = "Формат звука: {}".format(AudioFormat.AMV)
-        elif audio == 3:
-            format = "Формат звука: {}".format(AudioFormat.AUF)
+    def set_format(self,audio: str)-> None:
+        if audio == "mp3":
+            format = AudioFormat.MP3.value
+        elif audio == "amv":
+            format = AudioFormat.AMV.value
+        elif audio == "auf":
+            format = AudioFormat.AUF.value
         self.__format = format
     
     def get_format(self):
@@ -50,12 +51,12 @@ class AudioMessage(Message):
             duration = 30
             message.set_duration(duration)
         try:
-            format = int(input("Какого формата записываем видео?\n Стандартный формат MP3(1)\n Улучшенный формат AMV(2)\n Пацанский формат AUF(3)"))
-            if format == 1 or format == 2 or format == 3:
+            format = input("Какого формата записываем видео?\nMP3\nAMV\nAUF").lower()
+            if format == "mp3" or format == "amv" or format == "auf":
                 message.set_format(format)
             else:
                 print("Установлен стандартный формат")
-                format = 1
+                format = "MP3"
                 message.set_format(format)
         except ValueError:
             print("Что-то пошло не так,установлен стандартный формат аудио")
@@ -68,7 +69,7 @@ class AudioMessage(Message):
     
     def __repr__(self):
         AudioMessage = type(self).__name__
-        return f"{AudioMessage}({self.get_id()!r},{self.get_content()!r},{self.get_recipient()!r},{self.get_time()!r},{self.get_duration()!r},{self.get_format})"
+        return f"{AudioMessage}({self.get_id()!r},{self.get_content()!r},{self.get_recipient()!r},{self.get_time()!r},{self.get_duration()!r},{self.get_format()!r})"
 
     def __str__(self):
         return f"ID вашего сообщения:{self.get_id()} Ваше сообщение: {self.get_content()} Получатель: {self.get_recipient()} Время отправки {self.get_time()} Длительность : {self.get_duration()} Формат аудио: {self.get_format}"
