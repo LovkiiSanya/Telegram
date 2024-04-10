@@ -1,9 +1,9 @@
 from Message import *
 
 class VideoFormat(enum.Enum):
-    MP4 = 1
-    AVI = 2
-    ANIME = 3
+    MP4 = "Стандартный формат MP4"
+    AVI = "Улучшенный формат AVI"
+    ANIME = "Аниме формат ANIME"
 
 class VideoQuality(enum.Enum):
     LOW = 144
@@ -25,12 +25,12 @@ class VideoMessage(Message):
         return self.__duration
 
     def set_format(self,video:int)-> None:
-        if video == 1:
-            format = "Формат звука: {}".format(VideoFormat.MP4)
-        elif video == 2:
-            format = "Формат звука: {}".format(VideoFormat.AVI)
-        elif video == 3:
-            format = "Формат звука: {}".format(VideoFormat.ANIME)
+        if video == "mp4":
+            format = VideoFormat.MP4.value
+        elif video == "avi":
+            format = VideoFormat.AVI.value
+        elif video == "anime":
+            format = VideoFormat.ANIME.value
         self.__format = format
 
     def get_format(self):
@@ -71,12 +71,12 @@ class VideoMessage(Message):
             duration = 30
             message.set_duration(duration)
         try:
-            format = int(input("Какого формата записываем видео?\n Стандартный формат MP4(1)\n Улучшенный формат AVI(2)\n Аниме формат ANIME(3)"))
-            if format == 1 or format == 2 or format == 3:
+            format = input("Какого формата записываем видео?\nMP4\nAVI\nANIME").lower()
+            if format == "mp4" or format == "avi" or format == "anime":
                 message.set_format(format)
             else:
                 print("Установлен стандартный формат")
-                format = 1
+                format = "mp4"
                 message.set_format(format)
         except ValueError:
             print("Что-то пошло не так,установлен стандартный формат видео")
