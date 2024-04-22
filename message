@@ -6,9 +6,12 @@ import time
 import enum
 import psycopg2
 from peewee import *
+from create_DB import *
 
 
 message_dict = {}
+
+
 
 class Message:
 
@@ -45,12 +48,14 @@ class Message:
         message.set_content(content)
         user_name = input("Кому отправляем сообщение ? ")
         message.set_recipient(user_name)
-        time = datetime.datetime.now().strftime("%H:%M:%S")
+        time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         message.set_time(time)
         message_dict[message.get_id()] = message
         print("Айди для архива сообщений,", message.get_id())
+        TelegaTable.create(message_table_type = "Text Format",message_table_content = message.get_content(),message_table_recipient = message.get_recipient(),message_table_date = message.get_time())
         return message
 
+    
 
     
     def __repr__(self):
