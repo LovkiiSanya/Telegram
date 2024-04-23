@@ -6,7 +6,7 @@ import time
 import enum
 import psycopg2
 from peewee import *
-from create_DB import *
+from create_db import *
 
 
 message_dict = {}
