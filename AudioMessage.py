@@ -36,7 +36,7 @@ class AudioMessage(Message):
         message.set_content(content)
         user_name = input("Кому отправляем сообщение ? ")
         message.set_recipient(user_name)
-        time = datetime.datetime.now().strftime("%H:%M:%S")
+        time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         message.set_time(time)
         try:
             duration = int(input("Введите продолжительность аудиосообщения 0-120 секунд"))
@@ -51,20 +51,20 @@ class AudioMessage(Message):
             duration = 30
             message.set_duration(duration)
         try:
-            format = input("Какого формата записываем видео?\nMP3\nAMV\nAUF").lower()
+            format = input("Какого формата записываем аудио?\nMP3\nAMV\nAUF").lower()
             if format == "mp3" or format == "amv" or format == "auf":
                 message.set_format(format)
             else:
                 print("Установлен стандартный формат")
-                format = "MP3"
+                format = "mp3"
                 message.set_format(format)
         except ValueError:
             print("Что-то пошло не так,установлен стандартный формат аудио")
-            format = 1
+            format = "mp3"
             message.set_format(format)
-        message_dict[message.get_id()] = message
-        print("Айди для архива сообщений,", message.get_id())
-        
+    
+        new_record_table = BasicAudioMessage(content,user_name,time,duration,message.get_format())
+        new_record_table.save()
         return message
     
     def __repr__(self):
