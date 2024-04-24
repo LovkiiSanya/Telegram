@@ -6,10 +6,10 @@ class VideoFormat(enum.Enum):
     ANIME = "Аниме формат ANIME"
 
 class VideoQuality(enum.Enum):
-    LOW = 144
-    MIDDLE = 360
-    GOOD = 720
-    PERFECT = 1080
+    LOW = "Качество видео 144"
+    MIDDLE = "Качество видео 360"
+    GOOD = "Качество видео 720"
+    PERFECT = "Качество видео 1080"
 
 class VideoMessage(Message):
     def __init__(self) -> None:
@@ -38,13 +38,13 @@ class VideoMessage(Message):
     
     def set_quality(self,pixels):
         if pixels == 144:
-            quality = "Качество видео: {}".format(VideoQuality.LOW)
+            quality = VideoQuality.LOW.value
         elif pixels == 360:
-            quality = "Качество видео: {}".format(VideoQuality.MIDDLE)
+            quality = VideoQuality.MIDDLE.value
         elif pixels == 720:
-            quality = "Качество видео: {}".format(VideoQuality.GOOD)
+            quality = VideoQuality.GOOD.value
         elif pixels == 1080:
-            quality = "Качество видео: {}".format(VideoQuality.PERFECT)
+            quality = VideoQuality.PERFECT.value
         self.__quality = quality
     
     def get_quality(self):
@@ -56,7 +56,7 @@ class VideoMessage(Message):
         message.set_content(content)
         user_name = input("Кому отправляем сообщение ? ")
         message.set_recipient(user_name)
-        time = datetime.datetime.now().strftime("%H:%M:%S")
+        time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         message.set_time(time)
         try:
             duration = int(input("Введите продолжительность видеосообщения 0-60 секунд"))
@@ -80,7 +80,7 @@ class VideoMessage(Message):
                 message.set_format(format)
         except ValueError:
             print("Что-то пошло не так,установлен стандартный формат видео")
-            format = 1
+            format = "mp4"
             message.set_format(format)
         
         try:
@@ -95,8 +95,9 @@ class VideoMessage(Message):
             print("Что-то пошло не так,установлен стандартное качество")
             quality = 360
             message.set_quality(quality)
-        message_dict[message.get_id()] = message
-        print("Айди для архива сообщений,", message.get_id())
+        
+        new_record_table = BasicVideoMessage(content,user_name,time,duration,message.get_format(),message.get_quality())
+        new_record_table.save()
         return message
 
     def __repr__(self):
