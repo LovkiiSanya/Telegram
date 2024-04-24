@@ -1,4 +1,4 @@
-from typing import Self
+
 import schedule
 import datetime
 import random
@@ -50,9 +50,9 @@ class Message:
         message.set_recipient(user_name)
         time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         message.set_time(time)
-        message_dict[message.get_id()] = message
-        print("Айди для архива сообщений,", message.get_id())
-        TelegaTable.create(message_table_type = "Text Format",message_table_content = message.get_content(),message_table_recipient = message.get_recipient(),message_table_date = message.get_time())
+    
+        new_record_table = BasicTextMessage(content,user_name,time,"Text message")
+        new_record_table.save()
         return message
 
     
