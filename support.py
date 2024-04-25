@@ -3,7 +3,9 @@ from AudioMessage import *
 from VideoMessage import *
 
 def CRUDoperations():
-    CRUDoperation = int(input("Для создания и отправки сообщения нажмите: (1) \nДля редактирования (текстовых) сообщений нажмите: (2) \nДля просмотра архива сообщений нажмите: (3)\nДля удалений сообщений нажмите(4)"))
+    CRUDoperation = int(input("Для создания и отправки сообщения нажмите: (1) \nДля редактирования (текстовых) "
+                              "сообщений нажмите: (2) \nДля просмотра архива сообщений нажмите: (3)\nДля удалений "
+                              "сообщений нажмите(4)"))
     if CRUDoperation == 1:
         create_message()
     elif CRUDoperation == 2:
@@ -44,16 +46,16 @@ def format_message():
         print("Что-то пошло не так, давайте еще разок")
 
 
-def create_message():
+def create_message(self=None):
     format = format_message()
     if format == 1:
-        Message.set_message_parameters()
+        Message.set_message_parameters(self)
         one_more_message()
     elif format == 2:
-        VideoMessage.set_message_parameters()
+        VideoMessage.set_message_parameters(self)
         one_more_message()
     elif format == 3:
-        AudioMessage.set_message_parameters()
+        AudioMessage.set_message_parameters(self)
         one_more_message()
     
 
