@@ -5,7 +5,6 @@ import random
 import time
 import enum
 import psycopg2
-from peewee import *
 from create_db import *
 
 
@@ -16,13 +15,12 @@ message_dict = {}
 class Message:
 
     def __init__(self) -> None:
-        self.__id: int = random.randint(1, 1000000)
-        self.__content: str = None # текст сообщения 
-        self.__recipient: str = None # имя получателя 
-        self.__time: datetime = None # время отправки сообщения 
+        self.__content: str = None  # текст сообщения 
+        self.__recipient: str = None  # имя получателя 
+        self.__time: datetime = None  # время отправки сообщения 
 
-    def get_id(self):
-        return self.__id
+    # def get_id(self):
+    #     return self.__id
     
     def set_content(self,content:str)->str:
         self.__content = content
@@ -42,7 +40,7 @@ class Message:
     def get_time(self):
         return self.__time
         
-    def set_message_parameters() -> "Message":
+    def set_message_parameters(self) -> "Message":
         message = Message()
         content = input("Тут вы можете ввести свое сообщение,но не хулиганьте!")
         message.set_content(content)
@@ -51,7 +49,7 @@ class Message:
         time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         message.set_time(time)
     
-        new_record_table = BasicTextMessage(content,user_name,time,"Text message")
+        new_record_table = BasicTextMessage(content, user_name, time, "Text message")
         new_record_table.save()
         return message
 
@@ -60,7 +58,7 @@ class Message:
     
     def __repr__(self):
         Message = type(self).__name__
-        return f"{Message}({self.get_id()!r},{self.get_content()!r},{self.get_recipient()!r},{self.get_time()!r})"
+        return f"{Message}({self.get_content()!r},{self.get_recipient()!r},{self.get_time()!r})"
 
     def __str__(self):
-        return f"ID вашего сообщения:{self.get_id()} Ваше сообщение: {self.get_content()} Получатель: {self.get_recipient()} Время отправки {self.get_time()}"
+        return f"Ваше сообщение: {self.get_content()} Получатель: {self.get_recipient()} Время отправки {self.get_time()}"
