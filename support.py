@@ -1,6 +1,8 @@
-from Message import * 
+from Message import *
 from AudioMessage import *
 from VideoMessage import *
+from create_db import *
+
 
 def CRUDoperations():
     CRUDoperation = int(input("Для создания и отправки сообщения нажмите: (1) \nДля редактирования (текстовых) "
@@ -15,15 +17,40 @@ def CRUDoperations():
     elif CRUDoperation == 4:
         delete_message()
 
+
 def delete_message():
-    delete_message = int(input("Введите айди сообщения для удаления:"))
-    message_dict.pop(delete_message)
-    print("Удалено!")
+    delete_message_table = input("Удалить можно любое сообщение,нужно только выбрать его формат и айди: \nAUDIO\n"
+                                 "VIDEO\n"
+                                 "TEXT\n").lower()
+    match delete_message_table:
+        case "audio":
+            audio_delete_message = int(input("Отлично,удаляем аудиосообщение,осталось ввести его id: "))
+            is_id_exists = BasicAudioMessage.select().where(BasicAudioMessage.id == audio_delete_message).exists()
+            if is_id_exists:
+                BasicAudioMessage.delete_by_id(audio_delete_message)
+            else:
+                print("Такого id нет в базе")
+        case "video":
+            video_delete_message = int(input("Отлично,удаляем видеосообщение,осталось ввести его id: "))
+            is_id_exists = BasicVideoMessage.select().where(BasicVideoMessage.id == video_delete_message).exists()
+            if is_id_exists:
+                BasicVideoMessage.delete_by_id(video_delete_message)
+            else:
+                print("Такого id нет в базе")
+        case "text":
+            text_delete_message = int(input("Отлично,удаляем текстовое сообщение,осталось ввести его id: "))
+            is_id_exists = BasicTextMessage.select().where(BasicTextMessage.id == text_delete_message).exists()
+            if is_id_exists:
+                BasicTextMessage.delete_by_id(text_delete_message)
+            else:
+                print("Такого id нет в базе")
+
 
 def check_message():
     check_message = int(input("Хотите посмотреть весь архив (1) или конкретное сообщение ?(2)"))
     if check_message == 1:
-        print(message_dict)
+        print(BasicVideoMessage.select())
+
     elif check_message == 2:
         check_message_id = int(input("Введите нужный айди:"))
         if check_message_id in message_dict:
@@ -31,12 +58,14 @@ def check_message():
         else:
             print("Ошибка ввода айди")
 
+
 def change_message():
     change_id = int(input("Для изменений текстовых сообщений надо ввести его айди!"))
     if type(message_dict[change_id]) == Message:
         create_message()
     else:
         print("что-то пошло не так")
+
 
 def format_message():
     format_message = int(input("Отлично!Собщение будет текстовое (1), Видеосообщение (2) или Аудиосообщение (3)?"))
@@ -57,7 +86,6 @@ def create_message(self=None):
     elif format == 3:
         AudioMessage.set_message_parameters(self)
         one_more_message()
-    
 
 
 def one_more_message():
@@ -66,5 +94,3 @@ def one_more_message():
         create_message()
     else:
         CRUDoperations()
-
-
