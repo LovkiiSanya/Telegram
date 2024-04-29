@@ -1,11 +1,14 @@
-version: "3.5"
+version: "3.8"
 
 services:
- dz_telega:
-  container_name: Telegram
-  ports:
-   - "5432:5432"
-  environment:
-   - POSTGRES_PASSWORD=root
-   - POSTGRES_USER=admin
-  image: postgres:latest
+  dz_telega:
+    image: postgres:latest
+    container_name: telegram
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=telegram
