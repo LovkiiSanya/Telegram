@@ -105,8 +105,8 @@ class VideoMessage(Message):
             quality = 360
             message.set_quality(quality)
 
-        new_record_table = BasicVideoMessage(content, user_name, time, duration, message.get_format(),
-                                             message.get_quality())
+        new_record_table = basic_video_message(content, user_name, time, duration, "Video message", format,
+                                             quality)
         new_record_table.save()
         return message
 
