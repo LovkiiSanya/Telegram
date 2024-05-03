@@ -66,7 +66,7 @@ class AudioMessage(Message):
             format = "mp3"
             message.set_format(format)
 
-        new_record_table = BasicAudioMessage(content, user_name, time, duration, message.get_format())
+        new_record_table = basic_audio_message(content, user_name, time, duration, "Audio Message", format)
         new_record_table.save()
         return message
 
