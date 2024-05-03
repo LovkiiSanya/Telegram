@@ -49,9 +49,11 @@ class Message:
         time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         message.set_time(time)
     
-        new_record_table = BasicTextMessage(content, user_name, time, "Text message")
+        new_record_table = basic_text_message(content, user_name, time, "Text message")
         new_record_table.save()
-        return message
+        new_record_id = new_record_table.id
+        print("ID новой записи:", new_record_id)
+
 
     
 
