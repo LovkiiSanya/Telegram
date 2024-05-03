@@ -25,23 +25,23 @@ def delete_message():
     match delete_message_table:
         case "audio":
             audio_delete_message = int(input("Отлично,удаляем аудиосообщение,осталось ввести его id: "))
-            is_id_exists = BasicAudioMessage.select().where(BasicAudioMessage.id == audio_delete_message).exists()
+            is_id_exists = basic_audio_message.select().where(basic_audio_message.id == audio_delete_message).exists()
             if is_id_exists:
-                BasicAudioMessage.delete_by_id(audio_delete_message)
+                basic_audio_message.delete_by_id(audio_delete_message)
             else:
                 print("Такого id нет в базе")
         case "video":
             video_delete_message = int(input("Отлично,удаляем видеосообщение,осталось ввести его id: "))
-            is_id_exists = BasicVideoMessage.select().where(BasicVideoMessage.id == video_delete_message).exists()
+            is_id_exists = basic_video_message.select().where(basic_video_message.id == video_delete_message).exists()
             if is_id_exists:
-                BasicVideoMessage.delete_by_id(video_delete_message)
+                basic_video_message.delete_by_id(video_delete_message)
             else:
                 print("Такого id нет в базе")
         case "text":
             text_delete_message = int(input("Отлично,удаляем текстовое сообщение,осталось ввести его id: "))
-            is_id_exists = BasicTextMessage.select().where(BasicTextMessage.id == text_delete_message).exists()
+            is_id_exists = basic_text_message.select().where(basic_text_message.id == text_delete_message).exists()
             if is_id_exists:
-                BasicTextMessage.delete_by_id(text_delete_message)
+                basic_text_message.delete_by_id(text_delete_message)
             else:
                 print("Такого id нет в базе")
 
@@ -49,7 +49,11 @@ def delete_message():
 def check_message():
     check_message = int(input("Хотите посмотреть весь архив (1) или конкретное сообщение ?(2)"))
     if check_message == 1:
-        print(BasicVideoMessage.select())
+            print(basic_text_message.select())
+            print(basic_audio_message.select())
+            print(basic_video_message.select())
+
+
 
     elif check_message == 2:
         check_message_id = int(input("Введите нужный айди:"))
