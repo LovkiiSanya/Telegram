@@ -108,7 +108,9 @@ class VideoMessage(Message):
         new_record_table = basic_video_message(content, user_name, time, duration, "Video message", format,
                                              quality)
         new_record_table.save()
-        return message
+        new_record_id = new_record_table.id
+        print("ID новой записи:", new_record_id)
+
 
     def __repr__(self):
         VideoMessage = type(self).__name__
