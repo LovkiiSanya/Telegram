@@ -2,6 +2,7 @@ from Message import *
 from AudioMessage import *
 from VideoMessage import *
 from create_db import *
+from check_message import *
 
 
 def CRUDoperations():
@@ -49,18 +50,22 @@ def delete_message():
 def check_message():
     check_message = int(input("Хотите посмотреть весь архив (1) или конкретное сообщение ?(2)"))
     if check_message == 1:
-            print(basic_text_message.select())
-            print(basic_audio_message.select())
-            print(basic_video_message.select())
-
-
+        for column in import_text_column:
+            content, recipient, time, message_type = column
+            print("Сообщение: " + content + "|", "Получатель:" + recipient + "|", "Время отправки:", time, "|", "Тип сообщения: " + message_type + "|")
+        for column in import_audio_column:
+            content, recipient, time, message_type, duration, format = column
+            print("Сообщение: " + content + "|", "Получатель:" + recipient + "|", "Время отправки:", time, "|", "Тип сообщения: " + message_type + "|", "Длительность:", duration, "|", "Формат: " + format + "|")
+        for column in import_video_column:
+            content, recipient, time, message_type, duration, format, quality = column
+            print("Сообщение: " + content + "|", "Получатель:" + recipient + "|", "Время отправки:", time, "|", "Тип сообщения: " + message_type + "|", "Длительность:", duration, "|", "Формат:" + quality + "|", "Качество:", format,"|")
 
     elif check_message == 2:
         check_message_id = int(input("Введите нужный айди:"))
-        if check_message_id in message_dict:
-            print(message_dict.get(check_message_id))
-        else:
-            print("Ошибка ввода айди")
+        text_message = basic_text_message.get(basic_text_message.id == check_message_id)
+        print("asda")
+    else:
+        print("Ошибка ввода айди")
 
 
 def change_message():
@@ -68,11 +73,11 @@ def change_message():
     if type(message_dict[change_id]) == Message:
         create_message()
     else:
-        print("что-то пошло не так")
+        print("Что-то пошло не так")
 
 
 def format_message():
-    format_message = int(input("Отлично!Собщение будет текстовое (1), Видеосообщение (2) или Аудиосообщение (3)?"))
+    format_message = int(input("Изменять можно только текстовые сообщения,введите его айди: "))
     if 1 <= format_message <= 3:
         return format_message
     else:
