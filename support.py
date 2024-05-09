@@ -77,7 +77,7 @@ def change_message():
 
 
 def format_message():
-    format_message = int(input("Изменять можно только текстовые сообщения,введите его айди: "))
+    format_message = int(input("Вы хотите создать текстовое сообщение (1),видеосообщение (2) или аудиосообщение (3)"))
     if 1 <= format_message <= 3:
         return format_message
     else:
