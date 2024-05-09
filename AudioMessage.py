@@ -68,7 +68,9 @@ class AudioMessage(Message):
 
         new_record_table = basic_audio_message(content, user_name, time, duration, "Audio Message", format)
         new_record_table.save()
-        return message
+        new_record_id = new_record_table.id
+        print("ID новой записи:", new_record_id)
+
 
     def __repr__(self):
         AudioMessage = type(self).__name__
